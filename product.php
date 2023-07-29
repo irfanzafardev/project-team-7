@@ -20,7 +20,7 @@ $no = 0;
 
 if (isset($_GET['delete'])) {
     $id = $_GET['delete'];
-    $deleteTransaction = $transactionClass->deleteTransaction($id);
+    $deleteProduct = $productClass->deleteProduct($id);
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -45,7 +45,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="sm:flex sm:items-center sm:justify-between">
                 <div class="text-center sm:text-left">
                     <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">Welcome, <span><?= $name ?></span>!</h1>
-
                     <p class="mt-1.5 text-sm text-gray-500">It's our simple transactional app</p>
                 </div>
 
@@ -122,17 +121,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </section>
         <section class="bg-white">
             <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
-                <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">Transaction List</h1>
-                <p class="mt-1.5 mb-10 text-sm text-gray-500">list of our transaction</p>
-                <a class="rounded-md bg-indigo-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-800" href="create-transaction.php">+ Add trasanction</a>
-                <a class="rounded-md bg-indigo-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-800" href="product.php">See all products</a>
+                <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">Product List</h1>
+                <p class="mt-1.5 mb-10 text-sm text-gray-500">list of our product</p>
+                <a class="rounded-md bg-indigo-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-800" href="create.php">+ Add data</a>
+                <a class="rounded-md bg-indigo-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-800" href="index.php">See all transactions</a>
                 <table class="min-w-full divide-y-2 divide-gray-200 bg-white text-sm mt-10">
                     <thead class="ltr:text-left rtl:text-right">
                         <tr>
                             <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">#</th>
                             <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Nama produk</th>
-                            <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Jumlah</th>
-                            <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Total harga</th>
+                            <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Harga</th>
+                            <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Satuan</th>
+                            <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Keterangan</th>
                             <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Aksi</th>
                             <th class="px-4 py-2"></th>
                         </tr>
@@ -140,16 +140,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     <tbody class="divide-y divide-gray-200">
                         <?php
-                        $transactions = $transactionClass->index();
+                        $products = $productClass->index();
 
-                        while ($result = mysqli_fetch_assoc($transactions)) {
+                        while ($result = mysqli_fetch_assoc($products)) {
                         ?>
                             <tr>
                                 <td class="whitespace-nowrap px-4 py-2 text-center font-medium text-gray-900"><?php echo ++$no; ?></td>
-                                <td class="whitespace-nowrap px-4 py-2 text-center text-gray-700"><?php echo $result['produk']; ?></td>
-                                <td class="whitespace-nowrap px-4 py-2 text-center text-gray-700"><?php echo $result['kuantitas']; ?></td>
-                                <td class="whitespace-nowrap px-4 py-2 text-center text-gray-700"><?php echo $result['total']; ?></td>
+                                <td class="whitespace-nowrap px-4 py-2 text-center text-gray-700"><?php echo $result['nama_barang']; ?></td>
+                                <td class="whitespace-nowrap px-4 py-2 text-center text-gray-700"><?php echo $result['harga']; ?></td>
+                                <td class="whitespace-nowrap px-4 py-2 text-center text-gray-700"><?php echo $result['satuan']; ?></td>
+                                <td class="whitespace-nowrap px-4 py-2 text-center text-gray-700"><?php echo $result['keterangan']; ?></td>
                                 <td class="whitespace-nowrap px-4 py-2 text-center">
+                                    <a href="edit.php?edit=<?= $result['id'] ?>" class="inline-block rounded bg-indigo-900 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">
+                                        <?php
+                                        echo $editIcons;
+                                        ?>
+                                    </a>
                                     <a href="?delete=<?= $result['id'] ?>" class="inline-block rounded bg-indigo-900 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700" onclick="return confirm('Are you sure want to delete this record?')">
                                         <?php
                                         echo $deleteIcons;

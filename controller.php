@@ -4,22 +4,21 @@ include 'connection.php';
 if (isset($_POST['action'])) {
     if ($_POST['action'] == 'add') {
 
-        $nama_barang = $_POST['nama_barang'];
-        $harga = $_POST['harga'];
-        $satuan = $_POST['satuan'];
-        $keterangan = $_POST['keterangan'];
-        $user_id = 1;
+        // $nama_barang = $_POST['nama_barang'];
+        // $harga = $_POST['harga'];
+        // $satuan = $_POST['satuan'];
+        // $keterangan = $_POST['keterangan'];
+        // $user_id = 1;
 
-        $query = "INSERT INTO products VALUES(null, '$nama_barang', '$harga', '$satuan', '$keterangan', '$user_id')";
-        $sql = mysqli_query($connection, $query);
+        // $query = "INSERT INTO products VALUES(null, '$nama_barang', '$harga', '$satuan', '$keterangan', '$user_id')";
+        // $sql = mysqli_query($connection, $query);
 
-        if ($sql) {
-            header('location: index.php');
-        } else {
-            echo $query;
-        }
+        // if ($sql) {
+        //     header('location: index.php');
+        // } else {
+        //     echo $query;
+        // }
 
-        // echo "Add data <a href='index.php'></a> ";
     } elseif ($_POST['action'] == 'edit') {
         echo "Edit data <a href='index.php'></a>";
     }
